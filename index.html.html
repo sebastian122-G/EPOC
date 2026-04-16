@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GOLD COPD — Evolución del Tratamiento</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d1b2a;
+    --navy-mid: #1b2d42;
+    --teal: #00a8a8;
+    --teal-light: #00d4d4;
+    --gold: #e0a840;
+    --gold-light: #f7c96a;
+    --cream: #f5f0e8;
+    --red: #c0392b;
+    --red-light: #e74c3c;
+    --green: #1a7a4a;
+    --green-light: #27ae60;
+    --slate: #334155;
+    --muted: #94a3b8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    background: var(--navy);
+    color: var(--cream);
+    min-height: 100vh;
+  }
+
+  /* ---- HEADER ---- */
+  header {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 60%, #0a2a3a 100%);
+    border-bottom: 3px solid var(--teal);
+    padding: 48px 40px 36px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,168,168,0.12) 0%, transparent 70%);
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 20%;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(224,168,64,0.08) 0%, transparent 70%);
+  }
+  .header-tag {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    color: var(--teal);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 4vw, 52px);
+    font-weight: 900;
+    line-height: 1.1;
+    color: #fff;
+    margin-bottom: 10px;
+  }
+  header h1 span { color: var(--gold); }
+  header p {
+    font-size: 15px;
+    color: var(--muted);
+    max-width: 620px;
+    line-height: 1.6;
+  }
+  .gold-pill {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--navy);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-top: 18px;
+  }
+
+  /* ---- NAV TABS ---- */
+  .tab-nav {
+    display: flex;
+    gap: 4px;
+    padding: 20px 40px 0;
+    background: var(--navy-mid);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    flex-wrap: wrap;
+  }
+  .tab-btn {
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    padding: 12px 20px;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .tab-btn:hover { color: var(--cream); }
+  .tab-btn.active { color: var(--teal-light); border-bottom-color: var(--teal); }
+
+  /* ---- MAIN CONTENT ---- */
+  .content {
+    padding: 32px 40px 60px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .tab-section { display: none; }
+  .tab-section.active { display: block; }
+
+  /* ---- SECTION TITLE ---- */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .section-icon {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .icon-blue { background: rgba(0,168,168,0.2); }
+  .icon-gold { background: rgba(224,168,64,0.2); }
+  .icon-red { background: rgba(192,57,43,0.2); }
+  .icon-green { background: rgba(26,122,74,0.2); }
+  .section-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .section-header p { font-size: 13px; color: var(--muted); margin-top: 3px; }
+
+  /* ---- TABLE ---- */
+  .table-wrap {
+    overflow-x: auto;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 28px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    min-width: 700px;
+  }
+  thead tr {
+    background: rgba(0,168,168,0.12);
+  }
+  thead th {
+    padding: 14px 18px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--teal-light);
+    border-bottom: 2px solid var(--teal);
+  }
+  thead th:first-child { border-radius: 12px 0 0 0; }
+  thead th:last-child { border-radius: 0 12px 0 0; }
+
+  tbody tr {
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    transition: background 0.15s;
+  }
+  tbody tr:hover { background: rgba(255,255,255,0.03); }
+  tbody tr:last-child { border-bottom: none; }
+  td {
+    padding: 14px 18px;
+    vertical-align: top;
+    line-height: 1.6;
+    color: rgba(245,240,232,0.88);
+  }
+  td:first-child {
+    font-weight: 600;
+    color: var(--gold-light);
+    white-space: nowrap;
+    font-size: 13px;
+  }
+  td.era-old { color: var(--muted); }
+  td.era-new { color: #d4f0e0; }
+
+  .badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+  }
+  .badge-old { background: rgba(148,163,184,0.15); color: var(--muted); }
+  .badge-new { background: rgba(0,168,168,0.18); color: var(--teal-light); }
+  .badge-key { background: rgba(224,168,64,0.18); color: var(--gold-light); }
+
+  .arrow-col {
+    text-align: center;
+    font-size: 20px;
+    color: var(--gold);
+    padding: 14px 8px;
+  }
+
+  /* ---- CALLOUT BOX ---- */
+  .callout {
+    border-left: 4px solid var(--teal);
+    background: rgba(0,168,168,0.07);
+    border-radius: 0 10px 10px 0;
+    padding: 16px 20px;
+    margin-top: 20px;
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: rgba(245,240,232,0.85);
+  }
+  .callout strong { color: var(--teal-light); }
+  .callout.gold-callout {
+    border-left-color: var(--gold);
+    background: rgba(224,168,64,0.07);
+  }
+  .callout.gold-callout strong { color: var(--gold-light); }
+  .callout.red-callout {
+    border-left-color: var(--red-light);
+    background: rgba(192,57,43,0.07);
+  }
+  .callout.red-callout strong { color: #f1948a; }
+
+  /* ---- TIMELINE ---- */
+  .timeline {
+    position: relative;
+    padding-left: 32px;
+    margin: 20px 0;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 10px; top: 4px; bottom: 4px;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--teal), var(--gold));
+  }
+  .tl-item {
+    position: relative;
+    margin-bottom: 22px;
+  }
+  .tl-dot {
+    position: absolute;
+    left: -26px; top: 4px;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    border: 2px solid var(--teal);
+    background: var(--navy);
+  }
+  .tl-dot.gold { border-color: var(--gold); }
+  .tl-year {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--teal);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .tl-year.gold { color: var(--gold); }
+  .tl-text { font-size: 14px; line-height: 1.6; color: rgba(245,240,232,0.85); }
+
+  /* ---- LEGEND ---- */
+  .legend {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+  /* ---- RESPONSIVE ---- */
+  @media (max-width: 768px) {
+    header, .content { padding-left: 20px; padding-right: 20px; }
+    .tab-nav { padding-left: 20px; }
+    .tab-btn { font-size: 12px; padding: 10px 14px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-tag">Neumología Basada en Evidencia</div>
+  <h1>GOLD COPD — <span>Evolución del Tratamiento</span></h1>
+  <p>Comparación histórica de los cambios más relevantes en clasificación, tratamiento farmacológico, biomarcadores e inteligencia artificial desde las primeras guías hasta el reporte 2026.</p>
+  <div class="gold-pill">📄 GOLD 2026 · 6ª Revisión Mayor</div>
+</header>
+
+<nav class="tab-nav">
+  <button class="tab-btn active" onclick="showTab('clasificacion')">🗂 Clasificación ABCD→ABE</button>
+  <button class="tab-btn" onclick="showTab('farma')">💊 Farmacoterapia</button>
+  <button class="tab-btn" onclick="showTab('biologicos')">🧬 Terapias Biológicas</button>
+  <button class="tab-btn" onclick="showTab('actividad')">📊 Actividad de Enfermedad</button>
+  <button class="tab-btn" onclick="showTab('ia')">🤖 IA & Tecnologías</button>
+  <button class="tab-btn" onclick="showTab('exacerbaciones')">⚡ Exacerbaciones</button>
+</nav>
+
+<div class="content">
+
+  <!-- ===== TAB 1: CLASIFICACIÓN ===== -->
+  <div id="tab-clasificacion" class="tab-section active">
+    <div class="section-header">
+      <div class="section-icon icon-blue">🗂</div>
+      <div>
+        <h2>Evolución del Sistema de Clasificación</h2>
+        <p>De ABCD a ABE — cómo cambió la estratificación del paciente</p>
+      </div>
+    </div>
+
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:var(--muted)"></div> Anterior</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--teal)"></div> Actual (2023–2026)</div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Aspecto</th>
+            <th>Pre-2011 (GOLD I–IV)</th>
+            <th>↠</th>
+            <th>2011–2022 (ABCD)</th>
+            <th>↠</th>
+            <th>2023–2026 (ABE) ★</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Base de clasificación</td>
+            <td class="era-old">Solo espirometría (FEV₁%)<br><small>Grados I, II, III, IV</small></td>
+            <td class="arrow-col">→</td>
+            <td>Espirometría + síntomas (CAT/mMRC) + exacerbaciones<br><small>Cuadrante ABCD</small></td>
+            <td class="arrow-col">→</td>
+            <td class="era-new"><strong>Síntomas + exacerbaciones (sin espirometría en clasificación)</strong><br><small>La espirometría guía el pronóstico pero NO el grupo inicial</small></td>
+          </tr>
+          <tr>
+            <td>Grupos de riesgo</td>
+            <td class="era-old">4 estadios espirométricos</td>
+            <td class="arrow-col">→</td>
+            <td>A, B, C, D</td>
+            <td class="arrow-col">→</td>
+            <td class="era-new"><strong>A, B, E</strong><br>C y D se fusionan en <strong>E</strong> (Exacerbator)</td>
+          </tr>
+          <tr>
+            <td>Grupo E — umbral de exacerbaciones</td>
+            <td class="era-old">—</td>
+            <td class="arrow-col">→</td>
+            <td>≥2 moderadas o ≥1 grave = grupo D</td>
+            <td class="arrow-col">→</td>
+            <td class="era-new"><strong>≥1 moderada o ≥1 grave = Grupo E</strong><br><span style="color:var(--gold-light)">⚡ Cambio clave GOLD 2026</span></td>
+          </tr>
+          <tr>
+            <td>Justificación del cambio</td>
+            <td class="era-old">—</td>
+            <td class="arrow-col">→</td>
+            <td>—</td>
+            <td class="arrow-col">→</td>
+            <td class="era-new">Estudios observacionales muestran que <strong>incluso 1 exacerbación moderada</strong> previa al inicio de tratamiento aumenta el riesgo de eventos futuros</td>
+          </tr>
+          <tr>
+            <td>Papel del eosinófilo</td>
+            <td class="era-old">No considerado</td>
+            <td class="arrow-col">→</td>
+            <td>Mencionado como biomarcador</td>
+            <td class="arrow-col">→</td>
+            <td class="era-new"><strong>Integrado al algoritmo de decisión</strong> (guía uso de ICS y biologicos)<br>&lt;100, 100–300, ≥300 cél/µL</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <strong>Cambio crítico GOLD 2026:</strong> El umbral de 1 exacerbación moderada (antes se requerían 2) ahora activa la escalada terapéutica hacia LABA+LAMA+ICS si el eosinófilo ≥300 cél/µL. El objetivo explícito es alcanzar un estado de <em>baja actividad de enfermedad</em> = sin exacerbaciones.
+    </div>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-year">2001</div>
+        <div class="tl-text">Primer reporte GOLD. Clasificación únicamente espirométrica: GOLD I–IV según FEV₁.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-year">2011 — 1ª revisión mayor</div>
+        <div class="tl-text">Sistema ABCD. Combina espirometría + síntomas + historial de exacerbaciones. C y D requieren ≥2 exacerbaciones moderadas o ≥1 grave.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-year">2017 — 2ª revisión mayor</div>
+        <div class="tl-text">Se refina ABCD: la espirometría se separa del grupo ABCD para guiar el pronóstico, no el tratamiento inicial.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-year">2023 — 5ª revisión mayor</div>
+        <div class="tl-text">Sistema ABE: C y D se fusionan en E. Foco en el "fenotipo exacerbador" independientemente del nivel de síntomas.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot gold"></div>
+        <div class="tl-year gold">2026 — 6ª revisión mayor (actual)</div>
+        <div class="tl-text">Umbral de Grupo E baja a 1 exacerbación moderada. Se introduce concepto formal de "Actividad de Enfermedad". Se añade biologicos y capítulo de IA.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TAB 2: FARMACOTERAPIA ===== -->
+  <div id="tab-farma" class="tab-section">
+    <div class="section-header">
+      <div class="section-icon icon-gold">💊</div>
+      <div>
+        <h2>Farmacoterapia: Evolución del Algoritmo de Tratamiento</h2>
+        <p>Broncodilatadores, ICS y terapia triple — qué cambió y cuándo</p>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Componente</th>
+            <th>Era Antigua (pre-2017)</th>
+            <th>↠</th>
+            <th>2017–2022</th>
+            <th>↠</th>
+            <th>2023–2026 (Actual)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Primer escalón</td>
+            <td class="era-old">SABA (salbutamol) o SAMA (ipratropio) según síntomas</td>
+            <td class="arrow-col">→</td>
+            <td>LAMA o LABA como monoterapia de mantenimiento</td>
+            <td class="arrow-col">→</td>
+            <td class="era-new"><strong>LABA+LAMA como preferencia para la mayoría</strong><br>Monoterapia solo si síntomas muy leves (Grupo A)</td>
+          </tr>
+          <tr>
+            <td>ICS (corticoide inhalado)</td>
+            <td class="era-old">Recomendado en todos los grupos C y D sin distinción</td>
+            <td class="arrow-col">→</td>
+            <td>Guiado por exacerbaciones; se reconoce riesgo de neumonía</td>
+            <td class="arrow-col">→</td>
+            <td class="era-new"><strong>Guiado por eosinófilos en sangre</strong><br>≥100 cél/µL: considerar<br>≥300 cél/µL: preferir<br>&lt;100 cél/µL: evitar (riesgo neumonía)</td>
+          </tr>
+          <tr>
+            <td>Terapia triple LABA+LAMA+ICS</td>
+            <td class="era-old">Solo en casos graves seleccionados</td>
+            <td class="arrow-col">→</td>
+            <td>Evidencia RCT (IMPACT, ETHOS, KRONOS): superioridad demostrada sobre dual</td>
+            <td class="arrow-col">→</td>
+            <td class="era-new"><strong>Indicada desde inicio en Grupo E con eosinófilos ≥300 cél/µL</strong><br>Plataforma para escalar a biológico si falla</td>
+          </tr>
+          <tr>
+            <td>Ensifentrine</td>
+            <td class="era-old">No disponible</td>
+            <td class="arrow-col">→</td>
+            <td>No disponible</td>
+            <td class="arrow-col">→</td>
+            <td class="era-new"><strong>Nueva clase: inhibidor dual PDE3/PDE4 inhalado</strong><br>Broncodilatador + antiinflamatorio<br>Aprobado en EE.UU. (2024)</td>
+          </tr>
+          <tr>
+            <td>Roflumilast (PDE4 oral)</td>
+            <td class="era-old">No disponible</td>
+            <td class="arrow-col">→</td>
+            <td>Indicado en bronquitis crónica con FEV₁ &lt;50%</td>
+            <td class="arrow-col">→</td>
+            <td class="era-new">Se mantiene; combinado con azitromicina o NAC en fenotipo exacerbador</td>
+          </tr>
+          <tr>
+            <td>Tratamiento inicial vs. seguimiento</td>
+            <td class="era-old">Algoritmo único sin distinción</td>
+            <td class="arrow-col">→</td>
+            <td>Inicio de distinción</td>
+            <td class="arrow-col">→</td>
+            <td class="era-new"><strong>Figuras 3.7/3.8/3.9 explícitamente separadas:</strong><br>· Tratamiento INICIAL (paciente naïve)<br>· Tratamiento de SEGUIMIENTO (paciente en tratamiento)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout gold-callout">
+      <strong>Punto clave 2026:</strong> El algoritmo ya no es lineal. Se estructura en un <em>ciclo de manejo</em>: evaluar → ajustar → re-evaluar. La escalada se guía por si el problema dominante son los síntomas, las exacerbaciones o ambos.
+    </div>
+  </div>
+
+  <!-- ===== TAB 3: BIOLÓGICOS ===== -->
+  <div id="tab-biologicos" class="tab-section">
+    <div class="section-header">
+      <div class="section-icon icon-red">🧬</div>
+      <div>
+        <h2>Terapias Biológicas en EPOC</h2>
+        <p>La gran novedad de GOLD 2026 — de ausencia total a indicaciones basadas en RCT</p>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Agente</th>
+            <th>Diana molecular</th>
+            <th>Pre-2023</th>
+            <th>GOLD 2026 — Evidencia e Indicación</th>
+            <th>Resultado clave</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Dupilumab</td>
+            <td>Anti-IL-4/IL-13 (receptor compartido)</td>
+            <td class="era-old">Sin indicación en EPOC</td>
+            <td class="era-new"><strong>✅ Recomendado</strong> en paciente con:<br>· LABA+LAMA+ICS previo<br>· GOLD 2–3<br>· Bronquitis crónica<br>· Eosinófilos ≥300 cél/µL<br>· ≥2 mod. o ≥1 grave/año</td>
+            <td>↓ Exacerbaciones moderadas/graves<br>↑ FEV₁ y calidad de vida a 52 sem (BOREAS, NOTUS)</td>
+          </tr>
+          <tr>
+            <td>Mepolizumab</td>
+            <td>Anti-IL-5</td>
+            <td class="era-old">Sin indicación en EPOC</td>
+            <td class="era-new"><strong>✅ Recomendado</strong> en:<br>· LABA+LAMA+ICS previo<br>· GOLD 2–4<br>· Con o sin bronquitis crónica<br>· Eosinófilos ≥300 cél/µL</td>
+            <td>↓ exacerbaciones moderadas/graves a 52–104 sem<br>↓ hospitalizaciones y visitas a urgencias (MATINEE, METREX)</td>
+          </tr>
+          <tr>
+            <td>Benralizumab</td>
+            <td>Anti-receptor IL-5α</td>
+            <td class="era-old">Sin indicación en EPOC</td>
+            <td class="era-new"><strong>⚠️ No recomendado</strong><br>Dos RCT fase III no mostraron reducción significativa en tasa anualizada de exacerbaciones</td>
+            <td>Resultado negativo — no inferior a placebo en exacerbaciones (GALATHEA, TERRANOVA)</td>
+          </tr>
+          <tr>
+            <td>Tezepelumab / Astegolimab / Itepekimab</td>
+            <td>Anti-TSLP / Anti-IL-33 / Anti-IL-33</td>
+            <td class="era-old">Sin datos en EPOC</td>
+            <td class="era-new"><strong>🔬 En investigación</strong><br>Datos preliminares o estudios en curso; aún sin recomendación formal GOLD 2026</td>
+            <td>Resultados pendientes de validación en cohortes grandes de EPOC</td>
+          </tr>
+          <tr>
+            <td>Infliximab (anti-TNFα)</td>
+            <td>Anti-TNF-alfa</td>
+            <td class="era-old">Probado con resultados negativos</td>
+            <td class="era-new"><strong>❌ Contraindicado</strong><br>Evidencia de daño: mayor riesgo de malignidad y neumonía</td>
+            <td>Resultado negativo + señal de daño</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout red-callout">
+      <strong>GOLD 2026 — Figura 3.11 (nueva):</strong> Por primera vez se incluye una figura dedicada a ubicar los biológicos en el algoritmo de tratamiento. Son el cuarto escalón: después de LABA+LAMA+ICS fallido, en pacientes con eosinófilos ≥300 y criterio de exacerbador. <strong>El eosinófilo ≥300 cél/µL es el biomarcador guía para biologicos actualmente disponibles.</strong>
+    </div>
+    <div class="callout">
+      <strong>Contexto histórico:</strong> Hasta GOLD 2022, los biológicos no formaban parte del algoritmo EPOC. Su incorporación en 2023–2026 representa un cambio de paradigma: la EPOC eosinofílica con inflamación T2 ahora tiene una vía terapéutica similar al asma grave.
+    </div>
+  </div>
+
+  <!-- ===== TAB 4: ACTIVIDAD DE ENFERMEDAD ===== -->
+  <div id="tab-actividad" class="tab-section">
+    <div class="section-header">
+      <div class="section-icon icon-green">📊</div>
+      <div>
+        <h2>Concepto de Actividad de Enfermedad</h2>
+        <p>Nuevo paradigma GOLD 2026 — de control de síntomas a supresión de actividad inflamatoria</p>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Dimensión</th>
+            <th>Paradigma Anterior (pre-2026)</th>
+            <th>↠</th>
+            <th>GOLD 2026 — Nuevo Paradigma</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Objetivo de tratamiento</td>
+            <td class="era-old">Alivio de síntomas + prevención de exacerbaciones<br><em>"mejorar la calidad de vida"</em></td>
+            <td class="arrow-col">→</td>
+            <td class="era-new"><strong>Reducir la actividad de enfermedad</strong> para prevenir daño estructural progresivo e irreversible</td>
+          </tr>
+          <tr>
+            <td>Definición formal</td>
+            <td class="era-old">No existía como sección dedicada</td>
+            <td class="arrow-col">→</td>
+            <td class="era-new"><em>"Vías biológicas que (1) causan daño patológico y (2) son potencialmente reversibles con tratamiento"</em><br>Concepto tomado de reumatología/asma</td>
+          </tr>
+          <tr>
+            <td>Estado clínico objetivo</td>
+            <td class="era-old">Sin definición precisa</td>
+            <td class="arrow-col">→</td>
+            <td class="era-new">Dos estados definidos:<br><strong>Estabilidad</strong> = sin exacerbaciones + sin empeoramiento de síntomas + sin pérdida acelerada de FEV₁<br><strong>Control</strong> = estabilidad + síntomas por debajo de umbral (CAT)</td>
+          </tr>
+          <tr>
+            <td>Biomarcadores de actividad</td>
+            <td class="era-old">FEV₁ post-BD como principal marcador</td>
+            <td class="arrow-col">→</td>
+            <td class="era-new">Eosinófilos en sangre (T2), + necesidad de validar otros biomarcadores<br>Exacerbaciones, caída de FEV₁ > pérdida normal por edad, progresión radiológica de enfisema</td>
+          </tr>
+          <tr>
+            <td>Relación con diagnóstico precoz</td>
+            <td class="era-old">Diagnóstico en estadio avanzado aceptado como norma</td>
+            <td class="arrow-col">→</td>
+            <td class="era-new"><strong>Diagnóstico precoz prioritario</strong>: intervenir antes del daño estructural para que la supresión de actividad tenga mayor impacto<br>Pre-COPD y PRISm como ventanas de oportunidad</td>
+          </tr>
+          <tr>
+            <td>Modelos análogos</td>
+            <td class="era-old">Sin referencia a otras enfermedades</td>
+            <td class="arrow-col">→</td>
+            <td class="era-new">Explícitamente basado en el modelo de enfermedades inflamatorias crónicas (AR, asma, EII) donde "disease activity" guía la intensidad del tratamiento</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <strong>Implicación práctica:</strong> El objetivo ya no es solo que el paciente se sienta mejor o tenga menos exacerbaciones en el corto plazo. El objetivo es <strong>cero exacerbaciones</strong> para prevenir el daño acumulativo. Una sola exacerbación moderada es suficiente para escalar tratamiento (umbral Grupo E ajustado en 2026).
+    </div>
+    <div class="callout gold-callout">
+      <strong>Nuevo en GOLD 2026:</strong> Esta sección aparece por primera vez como capítulo independiente. Representa la adopción del lenguaje y la lógica de la reumatología (treat-to-target) en neumología. El tratamiento debe suprimir la actividad inflamatoria, no solo tratar los síntomas reactivamente.
+    </div>
+  </div>
+
+  <!-- ===== TAB 5: IA ===== -->
+  <div id="tab-ia" class="tab-section">
+    <div class="section-header">
+      <div class="section-icon icon-blue">🤖</div>
+      <div>
+        <h2>Inteligencia Artificial & Tecnologías Emergentes</h2>
+        <p>Capítulo 6 — completamente nuevo en GOLD 2026</p>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Área</th>
+            <th>Pre-GOLD 2026</th>
+            <th>↠</th>
+            <th>GOLD 2026 — Estado Actual</th>
+            <th>Nivel de evidencia</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Diagnóstico por IA</td>
+            <td class="era-old">No mencionado en guías</td>
+            <td class="arrow-col">→</td>
+            <td class="era-new">IA puede identificar pacientes en riesgo en HCE, facilitar diagnóstico precoz en screening de cáncer de pulmón, interpretar loops flujo-volumen automáticamente</td>
+            <td><span class="badge badge-key">Evidencia temprana</span></td>
+          </tr>
+          <tr>
+            <td>Alternativas a espirometría</td>
+            <td class="era-old">Espirometría como gold standard absoluto</td>
+            <td class="arrow-col">→</td>
+            <td class="era-new">IA aplicada a: sonidos respiratorios, voz, oscilometría (FOT/IOS), fotopletismografía, señales de e-nariz, sensores de movimiento</td>
+            <td><span class="badge badge-old">Poblaciones pequeñas / Requiere validación</span></td>
+          </tr>
+          <tr>
+            <td>Imagen — TC torácico</td>
+            <td class="era-old">Análisis manual por radiólogo</td>
+            <td class="arrow-col">→</td>
+            <td class="era-new">IA cuantifica patrón y extensión de enfisema, integridad de fisuras, plugs de moco, bronquiectasias, vasos pulmonares; análisis de nódulos para reducir procedimientos invasivos</td>
+            <td><span class="badge badge-new">Plataforma más madura</span></td>
+          </tr>
+          <tr>
+            <td>Biomarcadores biológicos (ómicas)</td>
+            <td class="era-old">Análisis estadísticos tradicionales</td>
+            <td class="arrow-col">→</td>
+            <td class="era-new">IA aplicada a datos ómicos para identificar biomarcadores y nuevas dianas terapéuticas. Modelos multimodales (MERLIN): integran imagen + clínica + laboratorio</td>
+            <td><span class="badge badge-old">Requiere validación longitudinal</span></td>
+          </tr>
+          <tr>
+            <td>Guías clínicas + multimorbilidad</td>
+            <td class="era-old">El médico aplica manualmente múltiples guías</td>
+            <td class="arrow-col">→</td>
+            <td class="era-new">IA puede integrar guías en HCE para alertar: polifarmacia, tratamientos inadecuados, vacunas pendientes, tests faltantes en paciente con múltiples comorbilidades</td>
+            <td><span class="badge badge-key">En desarrollo</span></td>
+          </tr>
+          <tr>
+            <td>Monitorización remota (RPM)</td>
+            <td class="era-old">Visitas presenciales como estándar</td>
+            <td class="arrow-col">→</td>
+            <td class="era-new">IA + sensores wearables para transmisión de PROs y datos fisiológicos. Inhaladores inteligentes para adherencia. Rehabilitación domiciliaria asistida por IA. Chatbots validados como interfaz domiciliaria</td>
+            <td><span class="badge badge-old">Evidencia limitada en desenlaces clínicos</span></td>
+          </tr>
+          <tr>
+            <td>Pronóstico</td>
+            <td class="era-old">Scores clínicos (BODE, ADO, etc.)</td>
+            <td class="arrow-col">→</td>
+            <td class="era-new">ML y deep learning para modelos pronósticos; aún <strong>no superan</strong> de forma consistente a los scores clínicos existentes. Útil para identificar pacientes en riesgo de exacerbaciones</td>
+            <td><span class="badge badge-old">Evidencia insuficiente</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <strong>Perspectiva GOLD 2026:</strong> La IA es promisoria pero requiere cautela. Las principales barreras son: calidad e interoperabilidad de datos en HCE, marcos legales de acceso a datos, y validación en cohortes grandes con seguimiento longitudinal. Las guías deben seguir siendo elaboradas por consenso humano de expertos — la IA las usa como input, no las reemplaza.
+    </div>
+    <div class="callout gold-callout">
+      <strong>"Keyboard Zero":</strong> Concepto nuevo introducido en GOLD 2026 — la conversación médico-paciente se graba y la IA genera el resumen de la visita (sin siglas) que el médico aprueba y se almacena en HCE. Objetivo: mejorar el contacto visual y la empatía, y reducir la carga administrativa.
+    </div>
+  </div>
+
+  <!-- ===== TAB 6: EXACERBACIONES ===== -->
+  <div id="tab-exacerbaciones" class="tab-section">
+    <div class="section-header">
+      <div class="section-icon icon-red">⚡</div>
+      <div>
+        <h2>Manejo de Exacerbaciones</h2>
+        <p>Capítulo 4 completamente revisado en GOLD 2026</p>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Aspecto</th>
+            <th>Versiones Previas</th>
+            <th>↠</th>
+            <th>GOLD 2026</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Definición de severidad</td>
+            <td class="era-old">Leve / Moderada / Grave<br>según uso de recursos</td>
+            <td class="arrow-col">→</td>
+            <td class="era-new">Se mantiene clasificación pero con nuevas figuras y flujos de decisión revisados para manejo hospitalario y ambulatorio</td>
+          </tr>
+          <tr>
+            <td>Umbrales de escalada</td>
+            <td class="era-old">≥2 moderadas o ≥1 grave para considerar escalada</td>
+            <td class="arrow-col">→</td>
+            <td class="era-new"><strong>≥1 moderada: umbral para considerar escalada</strong><br>Con objetivo de lograr estado de baja actividad = 0 exacerbaciones</td>
+          </tr>
+          <tr>
+            <td>Corticoides sistémicos guiados por eosinófilos</td>
+            <td class="era-old">Corticoides orales estándar en toda exacerbación moderada-grave</td>
+            <td class="arrow-col">→</td>
+            <td class="era-new">RCT (STARR2): prednisolona guiada por eosinófilos en atención primaria — reducción de uso innecesario de corticoides sin diferencia en desenlaces</td>
+          </tr>
+          <tr>
+            <td>Antibióticos</td>
+            <td class="era-old">Indicados si purulencia de esputo o necesidad de VMI</td>
+            <td class="arrow-col">→</td>
+            <td class="era-new">Se mantiene indicación + actualización de evidencia sobre selección según patron microbiológico y riesgo de resistencia</td>
+          </tr>
+          <tr>
+            <td>Prevención post-exacerbación</td>
+            <td class="era-old">Vacunación + terapia inhalada optimizada</td>
+            <td class="arrow-col">→</td>
+            <td class="era-new">Vacunación actualizada (RSV, influenza). Estrategia activa de seguimiento precoz post-alta. Escalada a biologico si cumple criterios</td>
+          </tr>
+          <tr>
+            <td>Vacunaciones recomendadas</td>
+            <td class="era-old">Influenza, neumococo, COVID, pertussis</td>
+            <td class="arrow-col">→</td>
+            <td class="era-new"><strong>Actualización 2026: RSV e influenza</strong> con nueva evidencia de efectividad en EPOC específicamente</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout red-callout">
+      <strong>Impacto del cambio de umbral:</strong> Al bajar a 1 exacerbación moderada para el Grupo E, un número significativamente mayor de pacientes calificará para terapia triple desde el inicio y potencialmente para biológicos en seguimiento. Esto representa un cambio práctico sustancial en la carga terapéutica y los costos del sistema de salud.
+    </div>
+  </div>
+
+</div><!-- /.content -->
+
+<script>
+function showTab(id) {
+  document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+</script>
+</body>
+</html>
